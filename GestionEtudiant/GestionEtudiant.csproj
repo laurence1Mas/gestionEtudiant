@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{98EF57CE-683E-4668-AFE9-9E243A8C5800}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GestionEtudiant</RootNamespace>
+    <AssemblyName>GestionEtudiant</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>.\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=8.0.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>packages\Npgsql.8.0.2\lib\netstandard2.1\Npgsql.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="classes\clsadresse.cs" />
+    <Compile Include="classes\clsetudiant.cs" />
+    <Compile Include="classes\clspersonneAdresse.cs" />
+    <Compile Include="classes\clstelephone.cs" />
+    <Compile Include="clsConnexion\clsconnexionSQL.cs" />
+    <Compile Include="clsConnexion\clsconnexionMYSQL.cs" />
+    <Compile Include="clsConnexion\clsconnexionPOSTGRESQL.cs" />
+    <Compile Include="clsGestionEtudiant_variables\clsvariable_adresse.cs" />
+    <Compile Include="clsGestionEtudiant_variables\clsvariable_etudiants.cs" />
+    <Compile Include="clsGestionEtudiant_variables\clsvariable_personneAdresse.cs" />
+    <Compile Include="clsGestionEtudiant_variables\clsvariable_telephone.cs" />
+    <Compile Include="forms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmprincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmprincipal.Designer.cs">
+      <DependentUpon>frmprincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="userControls\userAdresse.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControls\userAdresse.Designer.cs">
+      <DependentUpon>userAdresse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControls\userDomicile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControls\userDomicile.Designer.cs">
+      <DependentUpon>userDomicile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControls\userEtudiant.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControls\userEtudiant.Designer.cs">
+      <DependentUpon>userEtudiant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userControls\userTelephone.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="userControls\userTelephone.Designer.cs">
+      <DependentUpon>userTelephone.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="forms\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmprincipal.resx">
+      <DependentUpon>frmprincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="userControls\userAdresse.resx">
+      <DependentUpon>userAdresse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControls\userDomicile.resx">
+      <DependentUpon>userDomicile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControls\userEtudiant.resx">
+      <DependentUpon>userEtudiant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="userControls\userTelephone.resx">
+      <DependentUpon>userTelephone.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="rapports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\student_registration_60px.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
