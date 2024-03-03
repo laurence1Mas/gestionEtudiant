@@ -52,7 +52,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.dgid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgetudiant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgadresseid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgadresse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgavenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgnumeroavenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgdomicile)).BeginInit();
@@ -76,7 +76,7 @@
             this.dgdomicile.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgid,
             this.dgetudiant,
-            this.dgadresseid,
+            this.dgadresse,
             this.dgavenue,
             this.dgnumeroavenue});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -307,11 +307,11 @@
             this.dgetudiant.HeaderText = "etudiant";
             this.dgetudiant.Name = "dgetudiant";
             // 
-            // dgadresseid
+            // dgadresse
             // 
-            this.dgadresseid.DataPropertyName = "id_adresse";
-            this.dgadresseid.HeaderText = "adresse";
-            this.dgadresseid.Name = "dgadresseid";
+            this.dgadresse.DataPropertyName = "id_adresse";
+            this.dgadresse.HeaderText = "adresse";
+            this.dgadresse.Name = "dgadresse";
             // 
             // dgavenue
             // 
@@ -371,7 +371,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgid;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgetudiant;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgadresseid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgadresse;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgavenue;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgnumeroavenue;
     }

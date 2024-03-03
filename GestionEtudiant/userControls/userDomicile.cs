@@ -52,7 +52,10 @@ namespace GestionEtudiant.userControls
                     dgdomicile.DataSource = clsper.getlistdomicileMYSQL();
                     cmbetudiant.DataSource = clsetu.getlistetudiantMYSQL();
                     cmbetudiant.ValueMember = "id";
-                    cmbetudiant.DisplayMember = "quartier";
+                    cmbetudiant.DisplayMember = "nom";
+                    cmbadresse.DataSource = clsadre.getlistadresseMYSQL();
+                    cmbadresse.ValueMember = "id";
+                    cmbadresse.DisplayMember = "quartier";
                 }
             }
             catch (Exception ex)
@@ -112,23 +115,6 @@ namespace GestionEtudiant.userControls
                 {
                     bindingclass();
                     int value = clsper.update_domicile(clasperV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "domicile", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlist();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "domicile", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlist();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclass();
-                    int value = clsper.update_domicileMSQL(clasperV);
                     if (value >= 1)
                     {
                         MessageBox.Show("Operation effectuée avec succès", "domicile", MessageBoxButtons.OK, MessageBoxIcon.Information);

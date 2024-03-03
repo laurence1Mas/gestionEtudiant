@@ -116,14 +116,14 @@ namespace GestionEtudiant.classes
             {
                 int value = 0;
                 cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (con != null)
+                if (cons != null)
                 {
                     string query = " call InsertOrUpdatedomicile (null,@id_etudiant,@id_adresse,@avenue,@numero_avenue)";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter pretudiant = new SqlParameter("@id_etudiant", clsper.id_etudiant);
-                    SqlParameter pradresse = new SqlParameter("@id_adresse", clsper.id_adresse);
-                    SqlParameter pravenue = new SqlParameter("@avenue", clsper.avenue);
-                    SqlParameter prnumero = new SqlParameter("@numero_avenue", clsper.numero_avenue);
+                    MySqlCommand cmd = new MySqlCommand(query, cons);
+                    MySqlParameter pretudiant = new MySqlParameter("@id_etudiant", clsper.id_etudiant);
+                    MySqlParameter pradresse = new MySqlParameter("@id_adresse", clsper.id_adresse);
+                    MySqlParameter pravenue = new MySqlParameter("@avenue", clsper.avenue);
+                    MySqlParameter prnumero = new MySqlParameter("@numero_avenue", clsper.numero_avenue);
                     cmd.Parameters.Add(pretudiant);
                     cmd.Parameters.Add(pradresse);
                     cmd.Parameters.Add(pravenue);
@@ -144,15 +144,15 @@ namespace GestionEtudiant.classes
             {
                 int value = 0;
                 cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (con != null)
+                if (cons != null)
                 {
                     string query = " call InsertOrUpdatedomicile (@id,@id_etudiant,@id_adresse,@avenue,@numero_avenue)";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clsper.id);
-                    SqlParameter pretudiant = new SqlParameter("@id_etudiant", clsper.id_etudiant);
-                    SqlParameter pradresse = new SqlParameter("@id_adresse", clsper.id_adresse);
-                    SqlParameter pravenue = new SqlParameter("@avenue", clsper.avenue);
-                    SqlParameter prnumero = new SqlParameter("@numero_avenue", clsper.numero_avenue);
+                    MySqlCommand cmd = new MySqlCommand(query, cons);
+                    MySqlParameter prid = new MySqlParameter("@id", clsper.id);
+                    MySqlParameter pretudiant = new MySqlParameter("@id_etudiant", clsper.id_etudiant);
+                    MySqlParameter pradresse = new MySqlParameter("@id_adresse", clsper.id_adresse);
+                    MySqlParameter pravenue = new MySqlParameter("@avenue", clsper.avenue);
+                    MySqlParameter prnumero = new MySqlParameter("@numero_avenue", clsper.numero_avenue);
                     cmd.Parameters.Add(prid);
                     cmd.Parameters.Add(pretudiant);
                     cmd.Parameters.Add(pradresse);
