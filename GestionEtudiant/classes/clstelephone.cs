@@ -183,10 +183,10 @@ namespace GestionEtudiant.classes
         public List<clsGestionEtudiant_variables.clsvariable_telephone> getlisttelephoneMYSQL()
         {
             List<clsGestionEtudiant_variables.clsvariable_telephone> list = new List<clsGestionEtudiant_variables.clsvariable_telephone>();
-            con = new clsConnexion.clsconnexionSQL().DBConnect();
-            string strquery = "CALL sp_select_telephones";
-            SqlCommand cmd = new SqlCommand(strquery, con);
-            SqlDataReader dr = cmd.ExecuteReader();
+            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
+            string strquery = "select * from telephone";
+            MySqlCommand cmd = new MySqlCommand(strquery, cons);
+            MySqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
                 clsGestionEtudiant_variables.clsvariable_telephone clstel = new clsGestionEtudiant_variables.clsvariable_telephone();

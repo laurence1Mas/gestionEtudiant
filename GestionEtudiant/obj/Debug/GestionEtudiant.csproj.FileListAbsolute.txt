@@ -18,3 +18,17 @@ E:\visual project\GestionEtudiant\bin\Debug\MySql.Data.dll
 E:\gestionEtudiant\GestionEtudiant\bin\Debug\GestionEtudiant.exe.config
 E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.exe
 E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.pdb
+E:\gestionEtudiant\GestionEtudiant\bin\Debug\GestionEtudiant.exe
+E:\gestionEtudiant\GestionEtudiant\bin\Debug\GestionEtudiant.pdb
+E:\gestionEtudiant\GestionEtudiant\bin\Debug\MySql.Data.dll
+E:\gestionEtudiant\GestionEtudiant\bin\Debug\Npgsql.dll
+E:\gestionEtudiant\GestionEtudiant\bin\Debug\Npgsql.xml
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.csprojResolveAssemblyReference.cache
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.forms.frmLogin.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.frmprincipal.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.Properties.Resources.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.userControls.userAdresse.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.userControls.userDomicile.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.userControls.userEtudiant.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.userControls.userTelephone.resources
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.csproj.GenerateResource.Cache

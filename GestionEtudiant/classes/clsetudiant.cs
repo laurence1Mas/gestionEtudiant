@@ -242,7 +242,6 @@ namespace GestionEtudiant.classes
                 list.DataSource = ds.Tables["etudiant"];
                 list.ValueMember = "id";
                 list.DisplayMember = "noms";
-
             }
             catch (Exception ex)
             {
@@ -255,7 +254,7 @@ namespace GestionEtudiant.classes
             cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
             try
             {
-                var chrg = new MySqlCommand(" CALL chargement_etudiant", cons)
+                var chrg = new MySqlCommand("CALL `chargement_etudiant`()", cons)
                 {
                     CommandType = CommandType.StoredProcedure
                 };

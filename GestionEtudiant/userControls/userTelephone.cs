@@ -18,6 +18,7 @@ namespace GestionEtudiant.userControls
         public userTelephone()
         {
             InitializeComponent();
+            loadlist();
         }
         private void refresh()
         {
@@ -44,12 +45,9 @@ namespace GestionEtudiant.userControls
                 else if (cmbsgbd.Text =="Mysql")
                 {
                     dgtelephone.DataSource = clstel.getlisttelephoneMYSQL();
-                    clsetu.chargercomboboxMYSQL(cmbproprietaire);
-                }
-                else
-                {
-                    dgtelephone.DataSource = clstel.getlisttelephone();
-                    clsetu.chargercomboboxSQL(cmbproprietaire);
+                    cmbproprietaire.DataSource = clsetu.getlistetudiantMYSQL();
+                    cmbproprietaire.ValueMember = "id";
+                    cmbproprietaire.DisplayMember = "nom";
                 }
             }
             catch (Exception ex)
