@@ -15,3 +15,6 @@ E:\visual project\GestionEtudiant\obj\Debug\GestionEtudiant.userControls.userEtu
 E:\visual project\GestionEtudiant\obj\Debug\GestionEtudiant.userControls.userTelephone.resources
 E:\visual project\GestionEtudiant\obj\Debug\GestionEtudiant.forms.frmLogin.resources
 E:\visual project\GestionEtudiant\bin\Debug\MySql.Data.dll
+E:\gestionEtudiant\GestionEtudiant\bin\Debug\GestionEtudiant.exe.config
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.exe
+E:\gestionEtudiant\GestionEtudiant\obj\Debug\GestionEtudiant.pdb
