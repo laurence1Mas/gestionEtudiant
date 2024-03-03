@@ -1,10 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GestionEtudiant.classes
 {
@@ -211,6 +213,56 @@ namespace GestionEtudiant.classes
             return list;
         }
 
+        //====================================CHARGEMENT COMBOBOX========================//
+        public void chargercomboboxSQL(ComboBox list)
+        {
+            con = new clsConnexion.clsconnexionSQL().DBConnect();
+            try
+            {
+                var chrg = new SqlCommand("chargement_adresse", con)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                chrg.ExecuteNonQuery();
+                var da = new SqlDataAdapter(chrg);
+                var ds = new DataSet();
+                da.Fill(ds, "adresse");
+                list.DataSource = ds.Tables["adresse"];
+                list.ValueMember = "id";
+                list.DisplayMember = "adresse";
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void chargercomboboxMYSQL(ComboBox list)
+        {
+            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
+            try
+            {
+                var chrg = new MySqlCommand(" CALL chargement_adresse", cons)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                chrg.ExecuteNonQuery();
+                var da = new MySqlDataAdapter(chrg);
+                var ds = new DataSet();
+                da.Fill(ds, "adresse");
+                list.DataSource = ds.Tables["adresse"];
+                list.ValueMember = "id";
+                list.DisplayMember = "adresse";
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
     }
 }

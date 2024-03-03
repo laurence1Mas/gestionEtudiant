@@ -97,7 +97,7 @@ namespace GestionEtudiant.classes
             {
                 clsGestionEtudiant_variables.clsvariable_telephone clstel = new clsGestionEtudiant_variables.clsvariable_telephone();
                 clstel.id = dr["id"].ToString();
-                clstel.id_proprietaire =Convert.ToInt32(dr["id_proprietaire"]);
+                clstel.id_proprietaire =dr["id_proprietaire"].ToString();
                 clstel.initial = dr["initial"].ToString();
                 clstel.numero = dr["numero"].ToString();
                 list.Add(clstel);
@@ -191,7 +191,7 @@ namespace GestionEtudiant.classes
             {
                 clsGestionEtudiant_variables.clsvariable_telephone clstel = new clsGestionEtudiant_variables.clsvariable_telephone();
                 clstel.id = dr["id"].ToString();
-                clstel.id_proprietaire = Convert.ToInt32(dr["id_proprietaire"]);
+                clstel.id_proprietaire =dr["id_proprietaire"].ToString();
                 clstel.initial = dr["initial"].ToString();
                 clstel.numero = dr["numero"].ToString();
                 list.Add(clstel);

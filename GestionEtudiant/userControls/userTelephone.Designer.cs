@@ -36,6 +36,7 @@
             this.btnedit = new System.Windows.Forms.Button();
             this.btnsave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmbproprietaire = new System.Windows.Forms.ComboBox();
             this.txtcode = new System.Windows.Forms.TextBox();
             this.txtnumero = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,7 +46,8 @@
             this.btnprint = new System.Windows.Forms.Button();
             this.txtsearch = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.cmbproprietaire = new System.Windows.Forms.ComboBox();
+            this.cmbsgbd = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.dgid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgproprietaire = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dginitial = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -85,6 +87,7 @@
             this.dgtelephone.Name = "dgtelephone";
             this.dgtelephone.Size = new System.Drawing.Size(937, 231);
             this.dgtelephone.TabIndex = 16;
+            this.dgtelephone.DoubleClick += new System.EventHandler(this.dgtelephone_DoubleClick);
             // 
             // groupBox2
             // 
@@ -110,6 +113,7 @@
             this.btndelete.TabIndex = 2;
             this.btndelete.Text = "DELETE";
             this.btndelete.UseVisualStyleBackColor = false;
+            this.btndelete.Click += new System.EventHandler(this.btndelete_Click);
             // 
             // btnedit
             // 
@@ -121,6 +125,7 @@
             this.btnedit.TabIndex = 1;
             this.btnedit.Text = "EDIT";
             this.btnedit.UseVisualStyleBackColor = false;
+            this.btnedit.Click += new System.EventHandler(this.btnedit_Click);
             // 
             // btnsave
             // 
@@ -132,9 +137,12 @@
             this.btnsave.TabIndex = 0;
             this.btnsave.Text = "SAVE";
             this.btnsave.UseVisualStyleBackColor = false;
+            this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmbsgbd);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.cmbproprietaire);
             this.groupBox1.Controls.Add(this.txtcode);
             this.groupBox1.Controls.Add(this.txtnumero);
@@ -150,6 +158,14 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Identification";
+            // 
+            // cmbproprietaire
+            // 
+            this.cmbproprietaire.FormattingEnabled = true;
+            this.cmbproprietaire.Location = new System.Drawing.Point(66, 89);
+            this.cmbproprietaire.Name = "cmbproprietaire";
+            this.cmbproprietaire.Size = new System.Drawing.Size(227, 27);
+            this.cmbproprietaire.TabIndex = 13;
             // 
             // txtcode
             // 
@@ -235,32 +251,50 @@
             this.label7.TabIndex = 17;
             this.label7.Text = "search";
             // 
-            // cmbproprietaire
+            // cmbsgbd
             // 
-            this.cmbproprietaire.FormattingEnabled = true;
-            this.cmbproprietaire.Location = new System.Drawing.Point(66, 89);
-            this.cmbproprietaire.Name = "cmbproprietaire";
-            this.cmbproprietaire.Size = new System.Drawing.Size(227, 27);
-            this.cmbproprietaire.TabIndex = 13;
+            this.cmbsgbd.FormattingEnabled = true;
+            this.cmbsgbd.Items.AddRange(new object[] {
+            "Sql_server",
+            "Mysql",
+            "PostgreSQL"});
+            this.cmbsgbd.Location = new System.Drawing.Point(338, 169);
+            this.cmbsgbd.Name = "cmbsgbd";
+            this.cmbsgbd.Size = new System.Drawing.Size(238, 27);
+            this.cmbsgbd.TabIndex = 18;
+            this.cmbsgbd.SelectedIndexChanged += new System.EventHandler(this.cmbsgbd_SelectedIndexChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(338, 147);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(48, 19);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "sgbd";
             // 
             // dgid
             // 
+            this.dgid.DataPropertyName = "id";
             this.dgid.HeaderText = "id";
             this.dgid.Name = "dgid";
             // 
             // dgproprietaire
             // 
+            this.dgproprietaire.DataPropertyName = "id_proprietaire";
             this.dgproprietaire.HeaderText = "proprietaire";
             this.dgproprietaire.Name = "dgproprietaire";
             // 
             // dginitial
             // 
+            this.dginitial.DataPropertyName = "initial";
             this.dginitial.HeaderText = "Initial";
             this.dginitial.Name = "dginitial";
             // 
             // dgnumero
             // 
-            this.dgnumero.HeaderText = "ville";
+            this.dgnumero.DataPropertyName = "numero";
+            this.dgnumero.HeaderText = "numero";
             this.dgnumero.Name = "dgnumero";
             // 
             // userTelephone
@@ -276,6 +310,7 @@
             this.Controls.Add(this.label7);
             this.Name = "userTelephone";
             this.Size = new System.Drawing.Size(1000, 575);
+            this.Load += new System.EventHandler(this.userTelephone_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgtelephone)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -302,6 +337,8 @@
         private System.Windows.Forms.TextBox txtsearch;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbproprietaire;
+        private System.Windows.Forms.ComboBox cmbsgbd;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgid;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgproprietaire;
         private System.Windows.Forms.DataGridViewTextBoxColumn dginitial;
