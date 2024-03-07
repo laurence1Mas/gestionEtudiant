@@ -8,5 +8,7 @@ namespace GestionEtudiant.clsConnexion
 {
     class clsconnexionPOSTGRESQL
     {
+        
+        
     }
 }

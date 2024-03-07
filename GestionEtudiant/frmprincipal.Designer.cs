@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.container = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.container = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnetudiant = new System.Windows.Forms.Button();
-            this.btnadresse = new System.Windows.Forms.Button();
-            this.btntelephone = new System.Windows.Forms.Button();
-            this.btndomicile = new System.Windows.Forms.Button();
             this.slide = new System.Windows.Forms.Panel();
+            this.btndomicile = new System.Windows.Forms.Button();
+            this.btntelephone = new System.Windows.Forms.Button();
+            this.btnadresse = new System.Windows.Forms.Button();
+            this.btnetudiant = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -53,13 +53,6 @@
             this.panel1.Size = new System.Drawing.Size(1232, 51);
             this.panel1.TabIndex = 0;
             // 
-            // container
-            // 
-            this.container.Location = new System.Drawing.Point(220, 57);
-            this.container.Name = "container";
-            this.container.Size = new System.Drawing.Size(1000, 575);
-            this.container.TabIndex = 2;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -70,6 +63,13 @@
             this.label1.Size = new System.Drawing.Size(202, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "STUDENT-MANAGE";
+            // 
+            // container
+            // 
+            this.container.Location = new System.Drawing.Point(220, 57);
+            this.container.Name = "container";
+            this.container.Size = new System.Drawing.Size(1000, 575);
+            this.container.TabIndex = 2;
             // 
             // panel3
             // 
@@ -85,57 +85,13 @@
             this.panel3.Size = new System.Drawing.Size(214, 575);
             this.panel3.TabIndex = 3;
             // 
-            // pictureBox1
+            // slide
             // 
-            this.pictureBox1.Image = global::GestionEtudiant.Properties.Resources.student_registration_60px;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(208, 143);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // btnetudiant
-            // 
-            this.btnetudiant.BackColor = System.Drawing.Color.AliceBlue;
-            this.btnetudiant.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnetudiant.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnetudiant.ForeColor = System.Drawing.Color.Navy;
-            this.btnetudiant.Location = new System.Drawing.Point(20, 192);
-            this.btnetudiant.Name = "btnetudiant";
-            this.btnetudiant.Size = new System.Drawing.Size(172, 43);
-            this.btnetudiant.TabIndex = 1;
-            this.btnetudiant.Text = "Etudiant";
-            this.btnetudiant.UseVisualStyleBackColor = false;
-            this.btnetudiant.Click += new System.EventHandler(this.btnetudiant_Click);
-            // 
-            // btnadresse
-            // 
-            this.btnadresse.BackColor = System.Drawing.Color.AliceBlue;
-            this.btnadresse.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnadresse.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnadresse.ForeColor = System.Drawing.Color.Navy;
-            this.btnadresse.Location = new System.Drawing.Point(20, 266);
-            this.btnadresse.Name = "btnadresse";
-            this.btnadresse.Size = new System.Drawing.Size(172, 43);
-            this.btnadresse.TabIndex = 2;
-            this.btnadresse.Text = "Adresse";
-            this.btnadresse.UseVisualStyleBackColor = false;
-            this.btnadresse.Click += new System.EventHandler(this.btnadresse_Click);
-            // 
-            // btntelephone
-            // 
-            this.btntelephone.BackColor = System.Drawing.Color.AliceBlue;
-            this.btntelephone.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btntelephone.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btntelephone.ForeColor = System.Drawing.Color.Navy;
-            this.btntelephone.Location = new System.Drawing.Point(20, 339);
-            this.btntelephone.Name = "btntelephone";
-            this.btntelephone.Size = new System.Drawing.Size(172, 43);
-            this.btntelephone.TabIndex = 3;
-            this.btntelephone.Text = "Telephone";
-            this.btntelephone.UseVisualStyleBackColor = false;
-            this.btntelephone.Click += new System.EventHandler(this.btntelephone_Click);
+            this.slide.BackColor = System.Drawing.Color.AliceBlue;
+            this.slide.Location = new System.Drawing.Point(3, 192);
+            this.slide.Name = "slide";
+            this.slide.Size = new System.Drawing.Size(11, 43);
+            this.slide.TabIndex = 0;
             // 
             // btndomicile
             // 
@@ -151,13 +107,57 @@
             this.btndomicile.UseVisualStyleBackColor = false;
             this.btndomicile.Click += new System.EventHandler(this.btndomicile_Click);
             // 
-            // slide
+            // btntelephone
             // 
-            this.slide.BackColor = System.Drawing.Color.AliceBlue;
-            this.slide.Location = new System.Drawing.Point(3, 192);
-            this.slide.Name = "slide";
-            this.slide.Size = new System.Drawing.Size(11, 43);
-            this.slide.TabIndex = 0;
+            this.btntelephone.BackColor = System.Drawing.Color.AliceBlue;
+            this.btntelephone.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btntelephone.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btntelephone.ForeColor = System.Drawing.Color.Navy;
+            this.btntelephone.Location = new System.Drawing.Point(20, 339);
+            this.btntelephone.Name = "btntelephone";
+            this.btntelephone.Size = new System.Drawing.Size(172, 43);
+            this.btntelephone.TabIndex = 3;
+            this.btntelephone.Text = "Telephone";
+            this.btntelephone.UseVisualStyleBackColor = false;
+            this.btntelephone.Click += new System.EventHandler(this.btntelephone_Click);
+            // 
+            // btnadresse
+            // 
+            this.btnadresse.BackColor = System.Drawing.Color.AliceBlue;
+            this.btnadresse.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnadresse.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnadresse.ForeColor = System.Drawing.Color.Navy;
+            this.btnadresse.Location = new System.Drawing.Point(20, 266);
+            this.btnadresse.Name = "btnadresse";
+            this.btnadresse.Size = new System.Drawing.Size(172, 43);
+            this.btnadresse.TabIndex = 2;
+            this.btnadresse.Text = "Adresse";
+            this.btnadresse.UseVisualStyleBackColor = false;
+            this.btnadresse.Click += new System.EventHandler(this.btnadresse_Click);
+            // 
+            // btnetudiant
+            // 
+            this.btnetudiant.BackColor = System.Drawing.Color.AliceBlue;
+            this.btnetudiant.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnetudiant.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnetudiant.ForeColor = System.Drawing.Color.Navy;
+            this.btnetudiant.Location = new System.Drawing.Point(20, 192);
+            this.btnetudiant.Name = "btnetudiant";
+            this.btnetudiant.Size = new System.Drawing.Size(172, 43);
+            this.btnetudiant.TabIndex = 1;
+            this.btnetudiant.Text = "Etudiant";
+            this.btnetudiant.UseVisualStyleBackColor = false;
+            this.btnetudiant.Click += new System.EventHandler(this.btnetudiant_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::GestionEtudiant.Properties.Resources.student_registration_60px;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(208, 143);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // frmprincipal
             // 
@@ -172,6 +172,7 @@
             this.Name = "frmprincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "principal";
+            this.Load += new System.EventHandler(this.frmprincipal_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);

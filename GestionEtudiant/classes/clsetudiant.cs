@@ -1,4 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using GestionEtudiant.clsGestionEtudiant_variables;
+using GestionEtudiant.GestionEtudiantUtilitiesLib;
+using GestionEtudiant.ManagerSingleConnexion;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,268 +13,214 @@ using System.Windows.Forms;
 
 namespace GestionEtudiant.classes
 {
-    class clsetudiant
+    public class clsetudiant: clsvariable_etudiants
     {
-        SqlConnection con;
-        public int insert_etudiant(clsGestionEtudiant_variables.clsvariable_etudiants clsetu)
+
+        public clsetudiant()
         {
-            try
+        }
+        private string _id;
+        private string _matricule;
+        private string _nom;
+        private string _postnom;
+        private string _prenom;
+        private string _sex;
+        private string _etatcivile;
+
+        public string id
+        {
+            get
             {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
+                return _id;
+            }
+
+            set
+            {
+                _id = value;
+            }
+        }
+
+        public string matricule
+        {
+            get
+            {
+                return _matricule;
+            }
+
+            set
+            {
+                _matricule = value;
+            }
+        }
+
+        public string nom
+        {
+            get
+            {
+                return _nom;
+            }
+
+            set
+            {
+                _nom = value;
+            }
+        }
+
+        public string postnom
+        {
+            get
+            {
+                return _postnom;
+            }
+
+            set
+            {
+                _postnom = value;
+            }
+        }
+
+        public string prenom
+        {
+            get
+            {
+                return _prenom;
+            }
+
+            set
+            {
+                _prenom = value;
+            }
+        }
+
+        public string sexe
+        {
+            get
+            {
+                return _sex;
+            }
+
+            set
+            {
+                _sex = value;
+            }
+        }
+
+        public string etat_civil
+        {
+            get
+            {
+                return _etatcivile;
+            }
+
+            set
+            {
+                _etatcivile = value;
+            }
+        }
+
+        
+
+        public void Enregistrer(classes.clsetudiant etudiant)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_insert_or_update_etudiant";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Utilisez les propriétés de l'objet actuel (this)
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@nom", 50, DbType.String, _nom));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@postnom", 50, DbType.String, _postnom));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@prenom", 50, DbType.String, _prenom));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@sexe", 1, DbType.String, _sex));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@etatcivil", 50, DbType.String, _etatcivile));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void Modifier(clsvariable_etudiants etudiant)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_insert_or_update_etudiant";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Utilisez les propriétés de l'objet actuel (this)
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id", 50, DbType.String, _id));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@nom", 50, DbType.String, _nom));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@postnom", 50, DbType.String, _postnom));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@prenom", 50, DbType.String, _prenom));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@sexe", 1, DbType.String, _sex));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@etatcivil", 50, DbType.String, _etatcivile));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void Supprimer(int id)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_delete_etudiant";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id", 4, DbType.Int32, _id));
+
+                int record = cmd.ExecuteNonQuery();
+
+                if (record == 0)
+                    throw new InvalidOperationException("That id does not exist !!!");
+            }
+        }
+
+        public List<clsvariable_etudiants> Etudiant()
+        {
+            List<clsvariable_etudiants> lst = new List<clsvariable_etudiants>();
+
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_select_etudiants";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                IDataReader rd = cmd.ExecuteReader();
+
+                while (rd.Read())
                 {
-                    string query = " exec sp_insert_or_update_etudiant null,@nom,@postnom,@prenom,@sexe,@etat_civil";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prnom = new SqlParameter("@nom", clsetu.nom);
-                    SqlParameter prpostnom = new SqlParameter("@postnom", clsetu.postnom);
-                    SqlParameter prprenom = new SqlParameter("@prenom", clsetu.prenom);
-                    SqlParameter prsexe = new SqlParameter("@sexe", clsetu.sexe);
-                    SqlParameter pretatcivil = new SqlParameter("@etat_civil", clsetu.etat_civil);
-                    cmd.Parameters.Add(prnom);
-                    cmd.Parameters.Add(prpostnom);
-                    cmd.Parameters.Add(prprenom);
-                    cmd.Parameters.Add(prsexe);
-                    cmd.Parameters.Add(pretatcivil);
-                    value = cmd.ExecuteNonQuery();
+                    lst.Add(GetEtudiant(rd));
                 }
-                return value;
+
+                rd.Dispose();
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            return lst;
         }
 
-        public int update_etudiant(clsGestionEtudiant_variables.clsvariable_etudiants clsetu)
+        private clsvariable_etudiants GetEtudiant(IDataReader rd)
         {
-            try
-            {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_insert_or_update_etudiant @id,@nom,@postnom,@prenom,@sexe,@etat_civil";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clsetu.id);
-                    SqlParameter prnom = new SqlParameter("@nom", clsetu.nom);
-                    SqlParameter prpostnom = new SqlParameter("@postnom", clsetu.postnom);
-                    SqlParameter prprenom = new SqlParameter("@prenom", clsetu.prenom);
-                    SqlParameter prsexe = new SqlParameter("@sexe", clsetu.sexe);
-                    SqlParameter pretatcivil = new SqlParameter("@etat_civil", clsetu.etat_civil);
-                    cmd.Parameters.Add(prid);
-                    cmd.Parameters.Add(prnom);
-                    cmd.Parameters.Add(prpostnom);
-                    cmd.Parameters.Add(prprenom);
-                    cmd.Parameters.Add(prsexe);
-                    cmd.Parameters.Add(pretatcivil);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+            clsvariable_etudiants etudiant = new clsetudiant();
 
-        public int delete_etudiant(clsGestionEtudiant_variables.clsvariable_etudiants clsetu)
-        {
-            try
-            {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_delete_etudiant @id";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clsetu.id);
-                    cmd.Parameters.Add(prid);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public List<clsGestionEtudiant_variables.clsvariable_etudiants> getlistetudiant()
-        {
-            List<clsGestionEtudiant_variables.clsvariable_etudiants> list = new List<clsGestionEtudiant_variables.clsvariable_etudiants>();
-            con = new clsConnexion.clsconnexionSQL().DBConnect();
-            string strquery = "exec sp_select_etudiants";
-            SqlCommand cmd = new SqlCommand(strquery, con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                clsGestionEtudiant_variables.clsvariable_etudiants clsetu = new clsGestionEtudiant_variables.clsvariable_etudiants();
-                clsetu.id = dr["id"].ToString();
-                clsetu.matricule = dr["matricule"].ToString();
-                clsetu.nom = dr["nom"].ToString();
-                clsetu.postnom = dr["postnom"].ToString();
-                clsetu.prenom = dr["prenom"].ToString();
-                clsetu.sexe = dr["sexe"].ToString();
-                clsetu.etat_civil = dr["etat_civil"].ToString();
-                list.Add(clsetu);
-            }
-            return list;
-        }
-        //=========================================================================================//
-        //==================================LES METHODES POUR MYSQL================================//
-        //=========================================================================================//
-        MySqlConnection cons;
-        public int insert_etudiantMYSQL(clsGestionEtudiant_variables.clsvariable_etudiants clsetu)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = " call InsertOrUpdateEtudiant(null,@nom,@postnom,@prenom,@sexe,@etat_civil)";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prnom = new MySqlParameter("@nom", clsetu.nom);
-                    MySqlParameter prpostnom = new MySqlParameter("@postnom", clsetu.postnom);
-                    MySqlParameter prprenom = new MySqlParameter("@prenom", clsetu.prenom);
-                    MySqlParameter prsexe = new MySqlParameter("@sexe", clsetu.sexe);
-                    MySqlParameter pretatcivil = new MySqlParameter("@etat_civil", clsetu.etat_civil);
-                    cmd.Parameters.Add(prnom);
-                    cmd.Parameters.Add(prpostnom);
-                    cmd.Parameters.Add(prprenom);
-                    cmd.Parameters.Add(prsexe);
-                    cmd.Parameters.Add(pretatcivil);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public int update_etudiantMYSQL(clsGestionEtudiant_variables.clsvariable_etudiants clsetu)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = "call InsertOrUpdateEtudiant (@id,@nom,@postnom,@prenom,@sexe,@etat_civil)";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prid = new MySqlParameter("@id", clsetu.id);
-                    MySqlParameter prnom = new MySqlParameter("@nom", clsetu.nom);
-                    MySqlParameter prpostnom = new MySqlParameter("@postnom", clsetu.postnom);
-                    MySqlParameter prprenom = new MySqlParameter("@prenom", clsetu.prenom);
-                    MySqlParameter prsexe = new MySqlParameter("@sexe", clsetu.sexe);
-                    MySqlParameter pretatcivil = new MySqlParameter("@etat_civil", clsetu.etat_civil);
-                    cmd.Parameters.Add(prid);
-                    cmd.Parameters.Add(prnom);
-                    cmd.Parameters.Add(prpostnom);
-                    cmd.Parameters.Add(prprenom);
-                    cmd.Parameters.Add(prsexe);
-                    cmd.Parameters.Add(pretatcivil);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+            etudiant.id = rd["id"].ToString();
+            etudiant.matricule = rd["matricule"].ToString();
+            etudiant.nom = rd["nom"].ToString();
+            etudiant.postnom = rd["postnom"].ToString();
+            etudiant.prenom = rd["prenom"].ToString();
+            etudiant.sexe = rd["sexe"].ToString();
+            etudiant.etat_civil = rd["etat_civile"].ToString();
 
-        public int delete_etudiantMYSQL(clsGestionEtudiant_variables.clsvariable_etudiants clsetu)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = " delete from etudiant where id=@id";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prid = new MySqlParameter("@id", clsetu.id);
-                    cmd.Parameters.Add(prid);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return etudiant;
         }
-        public List<clsGestionEtudiant_variables.clsvariable_etudiants> getlistetudiantMYSQL()
-        {
-            List<clsGestionEtudiant_variables.clsvariable_etudiants> list = new List<clsGestionEtudiant_variables.clsvariable_etudiants>();
-            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-            string strquery = "select * from etudiant";
-            MySqlCommand cmd = new MySqlCommand(strquery, cons);
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                clsGestionEtudiant_variables.clsvariable_etudiants clsetu = new clsGestionEtudiant_variables.clsvariable_etudiants();
-                clsetu.id = dr["id"].ToString();
-                clsetu.matricule = dr["matricule"].ToString();
-                clsetu.nom = dr["nom"].ToString();
-                clsetu.postnom = dr["postnom"].ToString();
-                clsetu.prenom = dr["prenom"].ToString();
-                clsetu.sexe = dr["sexe"].ToString();
-                clsetu.etat_civil = dr["etat_civil"].ToString();
-                list.Add(clsetu);
-            }
-            return list;
-        }
-
-        public void chargercomboboxSQL(ComboBox list)
-        {
-            con = new clsConnexion.clsconnexionSQL().DBConnect();
-            try
-            {
-                var chrg = new SqlCommand("chargement_etudiant", con)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                chrg.ExecuteNonQuery();
-                var da = new SqlDataAdapter(chrg);
-                var ds = new DataSet();
-                da.Fill(ds, "etudiant");
-                list.DataSource = ds.Tables["etudiant"];
-                list.ValueMember = "id";
-                list.DisplayMember = "noms";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void chargercomboboxMYSQL(ComboBox list)
-        {
-            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-            try
-            {
-                var chrg = new MySqlCommand("CALL `chargement_etudiant`()", cons)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                chrg.ExecuteNonQuery();
-                var da = new MySqlDataAdapter(chrg);
-                var ds = new DataSet();
-                da.Fill(ds, "etudiant");
-                list.DataSource = ds.Tables["etudiant"];
-                list.ValueMember = "id";
-                list.DisplayMember = "noms";
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+       
     }
 }

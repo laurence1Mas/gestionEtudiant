@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GestionEtudiant.clsGestionEtudiant_variables
 {
-    class clsvariable_telephone
+    public interface clsvariable_telephone
     {
-        public string id { get; set; }
-        public string id_proprietaire { get; set; }
-        public string initial { get; set; }
-        public string numero { get; set; }
+         string id { get; set; }
+         string id_proprietaire { get; set; }
+         string initial { get; set; }
+         string numero { get; set; }
     }
 }

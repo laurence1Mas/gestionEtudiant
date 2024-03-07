@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GestionEtudiant.ManagerSingleConnexion;
+using GestionEtudiant.classes;
+using GestionEtudiant.clsGestionEtudiant_variables;
 
 namespace GestionEtudiant.userControls
 {
     public partial class userEtudiant : UserControl
     {
         classes.clsetudiant clsetu = new classes.clsetudiant();
-        clsGestionEtudiant_variables.clsvariable_etudiants clsetuV = new clsGestionEtudiant_variables.clsvariable_etudiants();
+        clsvariable_etudiants personne;
         public userEtudiant()
         {
             InitializeComponent();
@@ -24,20 +27,22 @@ namespace GestionEtudiant.userControls
         {
             try
             {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    dgetudiant.DataSource = clsetu.getlistetudiant();
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    dgetudiant.DataSource = clsetu.getlistetudiantMYSQL();
-                }
+                 dgetudiant.DataSource = clsetu.Etudiant();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("erreur de connection a la base de donnee" + ex, "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
+        }
+        private void bindingclass()
+        {
+            clsetu.id = txtcode.Text;
+            clsetu.nom = txtnom.Text;
+            clsetu.postnom = txtpostnom.Text;
+            clsetu.prenom = txtprenom.Text;
+            clsetu.etat_civil = Convert.ToString(cmbetat_civil.SelectedItem);
+            clsetu.sexe = Convert.ToString(cmbsexe.SelectedItem);
         }
         private void refresh()
         {
@@ -50,172 +55,61 @@ namespace GestionEtudiant.userControls
             cmbetat_civil.Text = "";
 
         }
-        private void bindingclassSql()
-        {
-            clsetuV.id = txtcode.Text;
-            clsetuV.matricule = txtmatricule.Text;
-            clsetuV.nom = txtnom.Text;
-            clsetuV.postnom = txtpostnom.Text;
-            clsetuV.prenom = txtprenom.Text;
-            clsetuV.sexe = Convert.ToString(cmbsexe.SelectedItem);
-            clsetuV.etat_civil = Convert.ToString(cmbetat_civil.SelectedItem);
-        }
-        //===========================methode d'insertion==============================//
-        private void save()
-        {
-            try
-            {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    bindingclassSql();
-                    int value = clsetu.insert_etudiant(clsetuV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclassSql();
-                    int value = clsetu.insert_etudiantMYSQL(clsetuV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("erreur de connection a la base de donnee" + ex, "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-        }
-        //=============================methode de modification===========================//
-        private void edit()
-        {
-            try
-            {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    bindingclassSql();
-                    int value = clsetu.update_etudiant(clsetuV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclassSql();
-                    int value = clsetu.update_etudiantMYSQL(clsetuV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("erreur de connection a la base de donnee" + ex, "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-        }
-        //=====================================methode de suppression=============================//
-        private void delete()
-        {
-            try
-            {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    bindingclassSql();
-                    int value = clsetu.delete_etudiant(clsetuV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclassSql();
-                    int value = clsetu.delete_etudiantMYSQL(clsetuV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSql();
-                        refresh();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("erreur de connection a la base de donnee" + ex, "etudiant", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-        }
-        private void userEtudiant_Load(object sender, EventArgs e)
+      private void userEtudiant_Load(object sender, EventArgs e)
         {
             loadlistSql();
         }
 
         private void btnsave_Click(object sender, EventArgs e)
         {
-            save();
+            try
+            {
+                bindingclass();
+
+                clsetu.Enregistrer(clsetu);
+
+                MessageBox.Show("Record has been saved Successfuly !!!", "Saving datas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                loadlistSql();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("Error when saving datas, " + ex.Message, "Saving datas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                MessageBox.Show("Error when saving datas sql, " + ex.Message, "Saving datas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show("Error when saving datas Mysql, " + ex.Message, "Saving datas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            //catch (Npgsql.NpgsqlException ex)
+            //{
+            //    MessageBox.Show("Error when saving datas, " + ex.Message, "Saving datas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error when saving datas, " + ex.Message, "Saving datas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                if (ImplementeConnexion.Instance.Conn != null)
+                {
+                    if (ImplementeConnexion.Instance.Conn.State == System.Data.ConnectionState.Open)
+                        ImplementeConnexion.Instance.Conn.Close();
+                }
+            }
         }
 
         private void btnedit_Click(object sender, EventArgs e)
         {
-            edit();
+
         }
 
         private void btndelete_Click(object sender, EventArgs e)
         {
-            delete();
+
         }
 
         private void dgetudiant_DoubleClick(object sender, EventArgs e)

@@ -13,7 +13,7 @@ namespace GestionEtudiant.userControls
     public partial class userAdresse : UserControl
     {
         classes.clsadresse clsdre = new classes.clsadresse();
-        clsGestionEtudiant_variables.clsvariable_adresse clsadreV = new clsGestionEtudiant_variables.clsvariable_adresse();
+        clsGestionEtudiant_variables.clsvariable_adresse clsadreV;
         public userAdresse()
         {
             InitializeComponent();
@@ -24,14 +24,8 @@ namespace GestionEtudiant.userControls
         {
             try
             {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    dgadresse.DataSource = clsdre.getlistadresse();
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    dgadresse.DataSource = clsdre.getlistadresseMYSQL();
-                }
+              dgadresse.DataSource = clsdre.Adresse();
+
             }
             catch (Exception ex)
             {
@@ -54,143 +48,6 @@ namespace GestionEtudiant.userControls
             clsadreV.ville = txtville.Text;
             clsadreV.pays = txtpays.Text;
         }
-        //======================methode d'insertion===============================//
-        private void save()
-        {
-            try
-            {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    bindingclassSql();
-                    int value = clsdre.insert_adresse(clsadreV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclassSql();
-                    int value = clsdre.insert_adresseMYSQL(clsadreV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                }
-
-            }
-            catch ( Exception ex)
-            {
-                MessageBox.Show("erreur de connection a la base de donnee"+ex, "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        //======================methode pour les modification===========================//
-        private void edit()
-        {
-            try
-            {
-                if (cmbsgbd.Text == "Sql_server")
-                {
-                    bindingclassSql();
-                    int value = clsdre.update_adresse(clsadreV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclassSql();
-                    int value = clsdre.update_adresseMYSQL(clsadreV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("erreur de connection a la base de donnee" + ex, "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        //=======================methode de suppression=================================
-        private void delete()
-        {
-            try
-            {
-                if (cmbsgbd.Text== "Sql_server")
-                {
-                    bindingclassSql();
-                    int value = clsdre.delete_adresse(clsadreV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                }
-                else if (cmbsgbd.Text == "Mysql")
-                {
-                    bindingclassSql();
-                    int value = clsdre.delete_adresseMYSQL(clsadreV);
-                    if (value >= 1)
-                    {
-                        MessageBox.Show("Operation effectuée avec succès", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("erreur dans l'operation", "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        loadlistSQL();
-                        refresh();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("erreur de connection a la base de donnee" + ex, "adresse", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
         private void userAdresse_Load(object sender, EventArgs e)
         {
             loadlistSQL();
@@ -198,17 +55,17 @@ namespace GestionEtudiant.userControls
 
         private void btnsave_Click(object sender, EventArgs e)
         {
-            save();
+           
         }
 
         private void btnedit_Click(object sender, EventArgs e)
         {
-            edit();
+           
         }
 
         private void btndelete_Click(object sender, EventArgs e)
         {
-            delete();
+           
         }
 
         private void dgadresse_DoubleClick(object sender, EventArgs e)

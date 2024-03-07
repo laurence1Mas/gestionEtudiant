@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace GestionEtudiant.clsGestionEtudiant_variables
 {
-    class clsvariable_adresse
+    public interface clsvariable_adresse
     {
-        public string id { get; set; }
-        public string quartier { get; set; }
-        public string commune { get; set; }
-        public string ville { get; set; }
-        public string pays { get; set; }
+         string id { get; set; }
+         string quartier { get; set; }
+         string commune { get; set; }
+         string ville { get; set; }
+         string pays { get; set; }
     }
 }

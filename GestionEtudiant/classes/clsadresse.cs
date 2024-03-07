@@ -1,4 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using GestionEtudiant.clsGestionEtudiant_variables;
+using GestionEtudiant.GestionEtudiantUtilitiesLib;
+using GestionEtudiant.ManagerSingleConnexion;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,259 +13,158 @@ using System.Windows.Forms;
 
 namespace GestionEtudiant.classes
 {
-    class clsadresse
+    public class clsadresse : clsvariable_adresse
     {
-        SqlConnection con;
-        public int insert_adresse(clsGestionEtudiant_variables.clsvariable_adresse clsadrs)
+        public clsadresse()
         {
-            try
+
+        }
+        string _id;
+        string _quartier;
+        string _commune;
+        string _ville;
+        string _pays;
+
+        public string id
+        {
+            get
             {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
+                return _id;
+            }
+
+            set
+            {
+                _id = value;
+            }
+        }
+
+        public string quartier
+        {
+            get
+            {
+                return _quartier;
+            }
+
+            set
+            {
+                _quartier = value; 
+            }
+        }
+
+        public string commune
+        {
+            get
+            {
+                return _commune;
+            }
+
+            set
+            {
+                _commune=value;
+            }
+        }
+
+        public string ville
+        {
+            get
+            {
+                return _ville;
+            }
+
+            set
+            {
+                _ville=value;
+            }
+        }
+
+        public string pays
+        {
+            get
+            {
+               return _pays;
+            }
+
+            set
+            {
+                _pays=value;
+            }
+        }
+
+        public void Enregistrer(clsvariable_adresse telephone)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_insert_or_update_telephone";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Utilisez les propriétés de l'objet actuel (this)
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id", 50, DbType.String, _id));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@quartier", 50, DbType.String, _quartier));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@commune", 50, DbType.String, _commune));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@ville", 50, DbType.String, _ville));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@pays", 50, DbType.String, _pays));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void Modifier(clsvariable_adresse telephone)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_insert_or_update_adresse";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Utilisez les propriétés de l'objet actuel (this)
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id", 50, DbType.String, _id));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@quartier", 50, DbType.String, _quartier));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@commune", 50, DbType.String, _commune));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@ville", 50, DbType.String, _ville));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@pays", 50, DbType.String, _pays));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private clsvariable_adresse GetAdresse(IDataReader rd)
+        {
+            clsvariable_adresse adresse = new clsadresse();
+            adresse.id = rd["id"].ToString();
+            adresse.quartier = rd["quartier"].ToString();
+            adresse.commune = rd["commune"].ToString();
+            adresse.ville = rd["ville"].ToString();
+            adresse.pays = rd["pays"].ToString();
+            return adresse;
+        }
+
+        public List<clsvariable_adresse> Adresse()
+        {
+            List<clsvariable_adresse> lst = new List<clsvariable_adresse>();
+
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_select_adresses";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                IDataReader rd = cmd.ExecuteReader();
+
+                while (rd.Read())
                 {
-                    string query = " exec sp_insert_or_update_adresse null,@quartier,@commune,@ville,@pays";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prquartier = new SqlParameter("@quartier", clsadrs.quartier);
-                    SqlParameter prcommune = new SqlParameter("@commune", clsadrs.commune);
-                    SqlParameter prville = new SqlParameter("@ville", clsadrs.ville);
-                    SqlParameter prpays = new SqlParameter("@pays", clsadrs.pays);
-                    cmd.Parameters.Add(prquartier);
-                    cmd.Parameters.Add(prcommune);
-                    cmd.Parameters.Add(prville);
-                    cmd.Parameters.Add(prpays);
-                    value = cmd.ExecuteNonQuery();
+                    lst.Add(GetAdresse(rd));
                 }
-                return value;
+
+                rd.Dispose();
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            return lst;
         }
-
-        public int update_adresse(clsGestionEtudiant_variables.clsvariable_adresse clsadrs)
-        {
-            try
-            {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_insert_or_update_adresse @id,@quartier,@commune,@ville,@pays";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clsadrs.id);
-                    SqlParameter prquartier = new SqlParameter("@quartier", clsadrs.quartier);
-                    SqlParameter prcommune = new SqlParameter("@commune", clsadrs.commune);
-                    SqlParameter prville = new SqlParameter("@ville", clsadrs.ville);
-                    SqlParameter prpays = new SqlParameter("@pays", clsadrs.pays);
-                    cmd.Parameters.Add(prid);
-                    cmd.Parameters.Add(prquartier);
-                    cmd.Parameters.Add(prcommune);
-                    cmd.Parameters.Add(prville);
-                    cmd.Parameters.Add(prpays);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public int delete_adresse(clsGestionEtudiant_variables.clsvariable_adresse clsadrs)
-        {
-            try
-            {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_delete_adresse @id";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clsadrs.id);
-                    cmd.Parameters.Add(prid);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public List<clsGestionEtudiant_variables.clsvariable_adresse> getlistadresse()
-        {
-            List<clsGestionEtudiant_variables.clsvariable_adresse> list = new List<clsGestionEtudiant_variables.clsvariable_adresse>();
-            con = new clsConnexion.clsconnexionSQL().DBConnect();
-            string strquery = "exec sp_select_adresses";
-            SqlCommand cmd = new SqlCommand(strquery, con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                clsGestionEtudiant_variables.clsvariable_adresse clsadrs = new clsGestionEtudiant_variables.clsvariable_adresse();
-                clsadrs.id = dr["id"].ToString();
-                clsadrs.quartier = dr["quartier"].ToString();
-                clsadrs.commune = dr["commune"].ToString();
-                clsadrs.ville = dr["ville"].ToString();
-                clsadrs.pays = dr["pays"].ToString();
-                list.Add(clsadrs);
-            }
-            return list;
-        }
-
-
-        MySqlConnection cons;
-        public int insert_adresseMYSQL(clsGestionEtudiant_variables.clsvariable_adresse clsadrs)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = " call InsertOrUpdatadresse (null,@quartier,@commune,@ville,@pays)";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prquartier = new MySqlParameter("@quartier", clsadrs.quartier);
-                    MySqlParameter prcommune = new MySqlParameter("@commune", clsadrs.commune);
-                    MySqlParameter prville = new MySqlParameter("@ville", clsadrs.ville);
-                    MySqlParameter prpays = new MySqlParameter("@pays", clsadrs.pays);
-                    cmd.Parameters.Add(prquartier);
-                    cmd.Parameters.Add(prcommune);
-                    cmd.Parameters.Add(prville);
-                    cmd.Parameters.Add(prpays);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public int update_adresseMYSQL(clsGestionEtudiant_variables.clsvariable_adresse clsadrs)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = "call InsertOrUpdatadresse (@id,@quartier,@commune,@ville,@pays)";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prid = new MySqlParameter("@id", clsadrs.id);
-                    MySqlParameter prquartier = new MySqlParameter("@quartier", clsadrs.quartier);
-                    MySqlParameter prcommune = new MySqlParameter("@commune", clsadrs.commune);
-                    MySqlParameter prville = new MySqlParameter("@ville", clsadrs.ville);
-                    MySqlParameter prpays = new MySqlParameter("@pays", clsadrs.pays);
-                    cmd.Parameters.Add(prid);
-                    cmd.Parameters.Add(prquartier);
-                    cmd.Parameters.Add(prcommune);
-                    cmd.Parameters.Add(prville);
-                    cmd.Parameters.Add(prpays);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public int delete_adresseMYSQL(clsGestionEtudiant_variables.clsvariable_adresse clsadrs)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = " delete from adresse where id=@id";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prid = new MySqlParameter("@id", clsadrs.id);
-                    cmd.Parameters.Add(prid);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public List<clsGestionEtudiant_variables.clsvariable_adresse> getlistadresseMYSQL()
-        {
-            List<clsGestionEtudiant_variables.clsvariable_adresse> list = new List<clsGestionEtudiant_variables.clsvariable_adresse>();
-            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-            string strquery = "select * from adresse";
-            MySqlCommand cmd = new MySqlCommand(strquery, cons);
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                clsGestionEtudiant_variables.clsvariable_adresse clsadrs = new clsGestionEtudiant_variables.clsvariable_adresse();
-                clsadrs.id = dr["id"].ToString();
-                clsadrs.quartier = dr["quartier"].ToString();
-                clsadrs.commune = dr["commune"].ToString();
-                clsadrs.ville = dr["ville"].ToString();
-                clsadrs.pays = dr["pays"].ToString();
-                list.Add(clsadrs);
-            }
-            return list;
-        }
-
-        //====================================CHARGEMENT COMBOBOX========================//
-        public void chargercomboboxSQL(ComboBox list)
-        {
-            con = new clsConnexion.clsconnexionSQL().DBConnect();
-            try
-            {
-                var chrg = new SqlCommand("chargement_adresse", con)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                chrg.ExecuteNonQuery();
-                var da = new SqlDataAdapter(chrg);
-                var ds = new DataSet();
-                da.Fill(ds, "adresse");
-                list.DataSource = ds.Tables["adresse"];
-                list.ValueMember = "id";
-                list.DisplayMember = "adresse";
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void chargercomboboxMYSQL(ComboBox list)
-        {
-            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-            try
-            {
-                var chrg = new MySqlCommand(" CALL chargement_adresse", cons)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                chrg.ExecuteNonQuery();
-                var da = new MySqlDataAdapter(chrg);
-                var ds = new DataSet();
-                da.Fill(ds, "adresse");
-                list.DataSource = ds.Tables["adresse"];
-                list.ValueMember = "id";
-                list.DisplayMember = "adresse";
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
     }
 }

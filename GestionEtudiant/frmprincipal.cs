@@ -18,7 +18,13 @@ namespace GestionEtudiant
             slide.Height = btnetudiant.Height;
             slide.Top = btnetudiant.Top;
         }
-
+        public void ActivateItems(bool status)
+        {
+            btnetudiant.Enabled = !status;
+            btntelephone.Enabled = !status;
+            btnadresse.Enabled = status;
+            btndomicile.Enabled = status;
+        }
         private void btnetudiant_Click(object sender, EventArgs e)
         {
             slide.Height = btnetudiant.Height;
@@ -49,6 +55,11 @@ namespace GestionEtudiant
             slide.Top = btndomicile.Top;
             container.Controls.Clear();
             container.Controls.Add(new userControls.userDomicile());
+        }
+
+        private void frmprincipal_Load(object sender, EventArgs e)
+        {
+            ActivateItems(true);
         }
     }
 }

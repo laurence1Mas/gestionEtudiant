@@ -1,6 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿using GestionEtudiant.clsGestionEtudiant_variables;
+using GestionEtudiant.GestionEtudiantUtilitiesLib;
+using GestionEtudiant.ManagerSingleConnexion;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -8,195 +12,140 @@ using System.Threading.Tasks;
 
 namespace GestionEtudiant.classes
 {
-    class clstelephone
+    public class clstelephone: clsvariable_telephone
     {
-        SqlConnection con;
-        public int insert_telephone(clsGestionEtudiant_variables.clsvariable_telephone clstel)
+        public clstelephone()
         {
-            try
+        }
+        private string _id;
+        private string _id_proprietaire;
+        private string _initial;
+        private string _numero;
+
+        public string id
+        {
+            get
             {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_insert_or_update_telephone null,@id_proprietaire,@initial,@numero";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prproprietaire = new SqlParameter("@id_proprietaire", clstel.id_proprietaire);
-                    SqlParameter prinitial = new SqlParameter("@initial", clstel.initial);
-                    SqlParameter prnumero = new SqlParameter("@numero", clstel.numero);
-                    cmd.Parameters.Add(prproprietaire);
-                    cmd.Parameters.Add(prinitial);
-                    cmd.Parameters.Add(prnumero);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
+                return _id;
             }
-            catch (Exception ex)
+
+            set
             {
-                throw new Exception(ex.Message);
+                _id = value;
             }
         }
 
-        public int update_telephone(clsGestionEtudiant_variables.clsvariable_telephone clstel)
+        public string id_proprietaire
         {
-            try
+            get
             {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_insert_or_update_telephone @id,@id_proprietaire,@initial,@numero";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clstel.id);
-                    SqlParameter prproprietaire = new SqlParameter("@id_proprietaire", clstel.id_proprietaire);
-                    SqlParameter prinitial = new SqlParameter("@initial", clstel.initial);
-                    SqlParameter prnumero = new SqlParameter("@numero", clstel.numero);
-                    cmd.Parameters.Add(prid);
-                    cmd.Parameters.Add(prproprietaire);
-                    cmd.Parameters.Add(prinitial);
-                    cmd.Parameters.Add(prnumero);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
+                return _id_proprietaire;
             }
-            catch (Exception ex)
+
+            set
             {
-                throw new Exception(ex.Message);
+                _id_proprietaire = value;
             }
         }
 
-        public int delete_telephone(clsGestionEtudiant_variables.clsvariable_telephone clstel)
+        public string initial
         {
-            try
+            get
             {
-                int value = 0;
-                con = new clsConnexion.clsconnexionSQL().DBConnect();
-                if (con != null)
-                {
-                    string query = " exec sp_delete_telephone @id";
-                    SqlCommand cmd = new SqlCommand(query, con);
-                    SqlParameter prid = new SqlParameter("@id", clstel.id);
-                    cmd.Parameters.Add(prid);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
+                return _initial;
             }
-            catch (Exception ex)
+
+            set
             {
-                throw new Exception(ex.Message);
-            }
-        }
-        public List<clsGestionEtudiant_variables.clsvariable_telephone> getlisttelephone()
-        {
-            List<clsGestionEtudiant_variables.clsvariable_telephone> list = new List<clsGestionEtudiant_variables.clsvariable_telephone>();
-            con = new clsConnexion.clsconnexionSQL().DBConnect();
-            string strquery = "exec sp_select_telephones";
-            SqlCommand cmd = new SqlCommand(strquery, con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                clsGestionEtudiant_variables.clsvariable_telephone clstel = new clsGestionEtudiant_variables.clsvariable_telephone();
-                clstel.id = dr["id"].ToString();
-                clstel.id_proprietaire =dr["id_proprietaire"].ToString();
-                clstel.initial = dr["initial"].ToString();
-                clstel.numero = dr["numero"].ToString();
-                list.Add(clstel);
-            }
-            return list;
-        }
-        MySqlConnection cons;
-        public int insert_telephoneMSQL(clsGestionEtudiant_variables.clsvariable_telephone clstel)
-        {
-            try
-            {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = " call InsertOrUpdattelephone (null,@id_proprietaire,@initial,@numero)";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prproprietaire = new MySqlParameter("@id_proprietaire", clstel.id_proprietaire);
-                    MySqlParameter prinitial = new MySqlParameter("@initial", clstel.initial);
-                    MySqlParameter prnumero = new MySqlParameter("@numero", clstel.numero);
-                    cmd.Parameters.Add(prproprietaire);
-                    cmd.Parameters.Add(prinitial);
-                    cmd.Parameters.Add(prnumero);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+                _initial = value;
             }
         }
 
-        public int update_telephoneMSQL(clsGestionEtudiant_variables.clsvariable_telephone clstel)
+        public string numero
         {
-            try
+            get
             {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
-                {
-                    string query = " call InsertOrUpdattelephone (@id,@id_proprietaire,@initial,@numero)";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prid = new MySqlParameter("@id", clstel.id);
-                    MySqlParameter prproprietaire = new MySqlParameter("@id_proprietaire", clstel.id_proprietaire);
-                    MySqlParameter prinitial = new MySqlParameter("@initial", clstel.initial);
-                    MySqlParameter prnumero = new MySqlParameter("@numero", clstel.numero);
-                    cmd.Parameters.Add(prid);
-                    cmd.Parameters.Add(prproprietaire);
-                    cmd.Parameters.Add(prinitial);
-                    cmd.Parameters.Add(prnumero);
-                    value = cmd.ExecuteNonQuery();
-                }
-                return value;
+                return _numero;
             }
-            catch (Exception ex)
+
+            set
             {
-                throw new Exception(ex.Message);
+                _numero = value;
+            }
+        }
+        public void Enregistrer(clsvariable_telephone telephone)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_insert_or_update_telephone";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Utilisez les propriétés de l'objet actuel (this)
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id_proprietaire", 50, DbType.String, _id_proprietaire));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@initial", 50, DbType.String, _initial));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@numero", 50, DbType.String, _numero));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void Modifier(clsvariable_telephone telephone)
+        {
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
+            {
+                cmd.CommandText = "sp_insert_or_update_telephone";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Utilisez les propriétés de l'objet actuel (this)
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id", 50, DbType.String, _id));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@id_proprietaire", 50, DbType.String, _id_proprietaire));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@initial", 50, DbType.String, _initial));
+                cmd.Parameters.Add(Parametres.Instance.AjouterParametre(cmd, "@numero", 50, DbType.String, _numero));
+
+                cmd.ExecuteNonQuery();
             }
         }
 
-        public int delete_telephoneMYSQL(clsGestionEtudiant_variables.clsvariable_telephone clstel)
+        private clsvariable_telephone GetTelephone(IDataReader rd)
         {
-            try
+            clsvariable_telephone telephone = new clstelephone();
+            telephone.id = rd["id"].ToString();
+            telephone.id_proprietaire = rd["id_proprietaire"].ToString();
+            telephone.initial = rd["initial"].ToString();
+            telephone.numero = rd["numero"].ToString();
+
+            return telephone;
+        }
+
+        public List<clsvariable_telephone> Telephone()
+        {
+            List<clsvariable_telephone> lst = new List<clsvariable_telephone>();
+
+            if (ImplementeConnexion.Instance.Conn.State == ConnectionState.Closed)
+                ImplementeConnexion.Instance.Conn.Open();
+
+            using (IDbCommand cmd = ImplementeConnexion.Instance.Conn.CreateCommand())
             {
-                int value = 0;
-                cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-                if (cons != null)
+                cmd.CommandText = "sp_select_telephones";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                IDataReader rd = cmd.ExecuteReader();
+
+                while (rd.Read())
                 {
-                    string query = " delele from telephone where id=@id";
-                    MySqlCommand cmd = new MySqlCommand(query, cons);
-                    MySqlParameter prid = new MySqlParameter("@id", clstel.id);
-                    cmd.Parameters.Add(prid);
-                    value = cmd.ExecuteNonQuery();
+                    lst.Add(GetTelephone(rd));
                 }
-                return value;
+
+                rd.Dispose();
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            return lst;
         }
-        public List<clsGestionEtudiant_variables.clsvariable_telephone> getlisttelephoneMYSQL()
-        {
-            List<clsGestionEtudiant_variables.clsvariable_telephone> list = new List<clsGestionEtudiant_variables.clsvariable_telephone>();
-            cons = new clsConnexion.clsconnexionMYSQL().DBConnect();
-            string strquery = "select * from telephone";
-            MySqlCommand cmd = new MySqlCommand(strquery, cons);
-            MySqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                clsGestionEtudiant_variables.clsvariable_telephone clstel = new clsGestionEtudiant_variables.clsvariable_telephone();
-                clstel.id = dr["id"].ToString();
-                clstel.id_proprietaire =dr["id_proprietaire"].ToString();
-                clstel.initial = dr["initial"].ToString();
-                clstel.numero = dr["numero"].ToString();
-                list.Add(clstel);
-            }
-            return list;
-        }
+
     }
 }
